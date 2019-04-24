@@ -47,5 +47,12 @@
           ▷ ui.js : 액션 type에 따라 color state 상태 값을 변경
           ▷ index.js : counter, ui reducer 합쳐서 내보내는 컴포넌트
         ▶ index.js : index.html에 최종적으로 랜더링하는 컴포넌트
-          - 컴포넌트와 Reducer가 연결되고나면 그 상태를 담고 있는
+          - 컴포넌트와 Reducer가 연결되고나면 그 리듀서를 불러와서 그 상태를 담고 있는
             store를 생성해서 랜더링 할 App 컴포넌트를 <Provider store={store}><App /></Provider>로 감싸서 랜더링
+          [ store의 액션 ]
+          - dispatch(action) : action을 reducer 보낸다.
+            . dispatch가 실행되면 store는 현재 상태와 action을 reducer로 전달
+            . reducer가 어떠한 변화가 필요한지 알아내서 변화를 주고
+              새 상태를 주면 store는 현상태를 새 상태로 갈아 끼운다
+          - getState() : 현상태를 반환하는 함수
+          - subscibe(listener) : 상태가 바뀔때 마다 실행할 콜배함수를 등록하는 것
