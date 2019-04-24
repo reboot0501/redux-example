@@ -1,11 +1,11 @@
 /**
  *  숫자와 버튼을 관리하는 컴포넌트를 제어하는 똑똑한 컴포넌트 
- *   
  */
 import React, { Component } from 'react';
-
+/* 자식 컴포넌트 불러오기*/
 import Value from './Value';
 import Control from './Control'
+
 import { connect } from 'react-redux';
 
 import * as actions from '../actions';

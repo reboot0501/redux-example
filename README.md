@@ -1,68 +1,51 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 프로젝트 설명
+간단한 React Redux 예제 입니다.
+버튼을 클릭할때 숫자 카운터가 변경되는 것과 
+(버튼 1: 값 1씩 증가, 버튼2: 값 1씩 감소)
+화면 배경색을 바꾸는 기능 구현
+(버튼3: 배경화면 색상 랜덤화)
+## 폴더 구성
 
-## Available Scripts
+▼ src>
+        ▼ components : UI 제어 와 랜더링과 관련 컴포넌트
+          ▷ App.js : 
+            - 부모 Component인 Counter 렌더링
+          ▷ Value.js : 
+            - 숫자를 관리하는 컴포넌트
+            - 부모로 부터 props로 숫자 값 전달을 받음
+          ▷ Control.js : 
+            - 버튼을 관리하는 컴포넌트
+            - 부모로 부터 props로 버튼 이벤트함수 정보를 전달 받음
+          ▷ Counter.js : 똑똑한 컴포넌트, redux와 연결
+            - 자식 Component인 Value, Control 을 담고 있는 컴포넌트
+            - 자식 컴포넌트에게 props로 값, 버튼 이벤트 정보를 전달
+            - 각 제어에 대한 reducer를 만들고 난후 redux 로 연결
+              . 액션type에 따라 변화된 state를 자식 컴포넌트에
+                넘거줄 props 정의
+              . 액션type에 따라 할 이벤트 함수 정보를 
+                자식 컴포넌트에 넘거줄 props 정의
+              . 내보낼 컴포넌트를 리덕스를
+                (mapStateToPops, mapDispathchProps)로 연결해서 새로운 컴포넌트로 내보내기
+        ▼ actions : 작업에 대한 정보를 지니고 있는 객체
+          - 값을 1씩 증가 시키기
+          - 값을 1씩 감소 시키기
+          - 새로운 색상 설정하기
+          ▷ ActionTypes.js : 작업에 대한 액션 정보를 정의하고 내보내는 컴포넌트
+          ▷ index.js : 액션생성자 컴포넌트
+            - 작업에 대한 액션 정보를 함수형태로 생성해서 내보내는 컴포넌트         
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+        ▼ reduces : 변화를 일으키는 함수
+          - http 같은 비동기 작업 X
+          - 인수 변경 X ( 동일한 인수 동일한 결과 산출 ) 
+           . DateNow()나 Randomize() 쓰면 안된다
+          - 이전 상태와 액션을 받아서 새로운 상태를 반환하는 것
+           . ( previousState, action ) => newState
+           . reduce 안에서 이전 상태를 직접변경하는 것이 아니라
+             그저 새로운 상태를 반환하는 것
+             ( 기존 상태를 복사하고 액션에 따라 상태를 변화를 주어 반환)
+          ▷ counter.js : 액션 type에 따라 number state 상태 값을 변경
+          ▷ ui.js : 액션 type에 따라 color state 상태 값을 변경
+          ▷ index.js : counter, ui reducer 합쳐서 내보내는 컴포넌트
+        ▶ index.js : index.html에 최종적으로 랜더링하는 컴포넌트
+          - 컴포넌트와 Reducer가 연결되고나면 그 상태를 담고 있는
+            store를 생성해서 랜더링 할 App 컴포넌트를 <Provider store={store}><App /></Provider>로 감싸서 랜더링
